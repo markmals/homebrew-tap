@@ -6,6 +6,13 @@ class Workbench < Formula
   license "MIT"
   head "https://github.com/markmals/workbench.git", branch: "main"
 
+  bottle do
+    root_url "https://github.com/markmals/homebrew-tap/releases/download/workbench-0.1.0"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "979792bbdf99afc22fee72c86fae9ce5d9a28b25a04f5f49285c896e3ea9c34b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "17129ae7feb377b86bf4bed9f177057dd028dc4b169b6bbbfe15399882bb6533"
+  end
+
   depends_on "go" => :build
 
   def install
