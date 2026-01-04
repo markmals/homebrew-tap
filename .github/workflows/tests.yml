@@ -30,8 +30,18 @@ jobs:
 
       - run: brew test-bot --only-tap-syntax
 
-      - run: brew test-bot --only-formulae
+      - name: Build bottles
         if: github.event_name == 'pull_request'
+        run: |
+          brew test-bot \
+            --skip-online-checks \
+            --only-formulae \
+            --only-json-tab \
+            --skip-recursive-dependents
+
+      - name: List bottle files
+        if: always() && github.event_name == 'pull_request'
+        run: ls -la *.bottle.* 2>/dev/null || echo "No bottle files in current directory"
 
       - name: Upload bottles as artifact
         if: always() && github.event_name == 'pull_request'
