@@ -2,7 +2,7 @@ class Workbench < Formula
   desc "Personal CLI to bootstrap, evolve, and archive/restore projects"
   homepage "https://github.com/markmals/workbench"
   url "https://github.com/markmals/workbench/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "PLACEHOLDER"
+  sha256 "da15d5c79319019a311c92140bf688fdc5b3ce4861d9d5ae8cd1fbf8be52df43"
   license "MIT"
 
   depends_on "go" => :build
