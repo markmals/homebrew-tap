@@ -47,5 +47,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bottles_${{ matrix.os }}
-          path: "*.bottle.*"
-          if-no-files-found: error
+          path: "**/*.bottle.*"
+          if-no-files-found: warn
