@@ -1,5 +1,5 @@
 class Workbench < Formula
-  desc "A personal CLI to bootstrap, evolve, and archive/restore projects"
+  desc "Personal CLI to bootstrap, evolve, and archive/restore projects"
   homepage "https://github.com/markmals/workbench"
   url "https://github.com/markmals/workbench/archive/refs/tags/v0.1.0.tar.gz"
   sha256 "PLACEHOLDER"
