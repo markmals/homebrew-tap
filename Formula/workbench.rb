@@ -8,9 +8,9 @@ class Workbench < Formula
 
   bottle do
     root_url "https://github.com/markmals/homebrew-tap/releases/download/workbench-0.1.0"
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "979792bbdf99afc22fee72c86fae9ce5d9a28b25a04f5f49285c896e3ea9c34b"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "17129ae7feb377b86bf4bed9f177057dd028dc4b169b6bbbfe15399882bb6533"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "5e3c1ae4a0f103bc4ac8364757bf7100f5c8a9f1c2b4bc4a34b55ca878203290"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d233f114bf2e37ccc9a9d87b4381bd98959da1ce9a816f0cc6b2c15c35fb1fe8"
   end
 
   depends_on "go" => :build
