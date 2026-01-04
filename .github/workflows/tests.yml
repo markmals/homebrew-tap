@@ -31,13 +31,16 @@ jobs:
       - run: brew test-bot --only-tap-syntax
 
       - name: Build bottles
+        id: build-bottle
         if: github.event_name == 'pull_request'
         run: |
           brew test-bot \
             --skip-online-checks \
             --only-formulae \
-            --only-json-tab \
             --skip-recursive-dependents
+          # List created bottle files for debugging
+          echo "Bottle files in current directory:"
+          find . -name "*.bottle.*" -type f 2>/dev/null || true
 
       - name: Upload bottles as artifact
         if: always() && github.event_name == 'pull_request'
@@ -45,3 +48,4 @@ jobs:
         with:
           name: bottles_${{ matrix.os }}
           path: "*.bottle.*"
+          if-no-files-found: error
