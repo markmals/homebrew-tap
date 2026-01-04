@@ -15,7 +15,7 @@ class Workbench < Formula
       -X github.com/markmals/workbench/internal/cli.Commit=#{tap.user}
       -X github.com/markmals/workbench/internal/cli.BuildDate=#{time.iso8601}
     ]
-    system "go", "build", *std_go_args(ldflags:), "./cmd/wb"
+    system "go", "build", *std_go_args(ldflags:, output: bin/"wb"), "./cmd/wb"
   end
 
   test do
