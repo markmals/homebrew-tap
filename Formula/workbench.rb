@@ -14,6 +14,8 @@ class Workbench < Formula
   end
 
   depends_on "go" => :build
+  depends_on "gh"
+  depends_on "mise"
 
   def install
     ldflags = %W[
