@@ -18,8 +18,8 @@ jobs:
           LATEST=$(curl -sf https://registry.npmjs.org/@voidzero-dev/vite-plus-cli-darwin-arm64 | jq -r '.["dist-tags"].latest')
           echo "latest=$LATEST" >> "$GITHUB_OUTPUT"
 
-          # Fetch current version from formula
-          CURRENT=$(curl -sf "https://raw.githubusercontent.com/${{ github.repository }}/main/Formula/vite-plus.rb" | grep -oP '(?<=version ")[\d.]+')
+          # Extract current version from the arm64 URL in the formula
+          CURRENT=$(curl -sf "https://raw.githubusercontent.com/${{ github.repository }}/main/Formula/vite-plus.rb" | grep -oP 'darwin-arm64-\K[\d.]+(?=\.tgz)')
           echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
 
           if [ "$LATEST" = "$CURRENT" ]; then
@@ -54,8 +54,11 @@ jobs:
             exit 1
           fi
 
-          # Update the formula
-          sed -i "s/version \".*\"/version \"${VERSION}\"/" Formula/vite-plus.rb
+          # Extract current version from the formula
+          OLD_VERSION=$(grep -oP 'darwin-arm64-\K[\d.]+(?=\.tgz)' Formula/vite-plus.rb)
+
+          # Update version in URLs and checksums
+          sed -i "s/${OLD_VERSION}/${VERSION}/g" Formula/vite-plus.rb
           sed -i "/darwin-arm64/{n;s/sha256 \".*\"/sha256 \"${ARM64_SHA}\"/}" Formula/vite-plus.rb
           sed -i "/darwin-x64/{n;s/sha256 \".*\"/sha256 \"${X64_SHA}\"/}" Formula/vite-plus.rb
 
