@@ -13,7 +13,34 @@ class VitePlus < Formula
   end
 
   def install
-    bin.install Dir["**/vp"].first => "vp"
+    # Install binary into libexec/bin/ so it sits inside a version directory
+    # that mirrors the structure the install script creates (~/.vite-plus/<ver>/)
+    (libexec/"bin").install Dir["**/vp"].first => "vp"
+
+    # Create wrapper package.json so `vp install` can pull down the JS CLI
+    # (needed for commands like migrate/create that delegate to JS)
+    (libexec/"package.json").write <<~JSON
+      {
+        "name": "vp-global",
+        "version": "#{version}",
+        "private": true,
+        "dependencies": {
+          "vite-plus": "#{version}"
+        }
+      }
+    JSON
+
+    bin.install_symlink libexec/"bin/vp"
+  end
+
+  def post_install
+    # Bootstrap JS dependencies using vp itself (no external node required).
+    # This runs outside the sandbox so vp can download Node if needed.
+    # CI=true suppresses interactive prompts (e.g., Node manager setup).
+    cd libexec do
+      ENV["CI"] = "true"
+      system bin/"vp", "install", "--silent"
+    end
   end
 
   def caveats
