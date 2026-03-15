@@ -30,7 +30,11 @@ class VitePlus < Formula
       }
     JSON
 
+    # vpx is a multicall alias — the vp binary changes behavior based on argv[0]
+    (libexec/"bin").install_symlink "vp" => "vpx"
+
     bin.install_symlink libexec/"bin/vp"
+    bin.install_symlink libexec/"bin/vpx"
   end
 
   def post_install
@@ -56,10 +60,12 @@ class VitePlus < Formula
           vp --version
           vp help
           vp create
+          vpx cowsay Vite+ FTW!
     EOS
   end
 
   test do
     assert_match version.to_s, shell_output("#{bin}/vp --version")
+    assert_match "Usage: vpx", shell_output("#{bin}/vpx --help")
   end
 end
