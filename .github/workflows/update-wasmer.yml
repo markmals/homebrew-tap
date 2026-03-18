@@ -21,9 +21,9 @@ jobs:
           LATEST=$(gh api repos/wasmerio/wasmer/releases/latest --jq '.tag_name')
           echo "latest=$LATEST" >> "$GITHUB_OUTPUT"
 
-          # Extract current version from the formula (tag includes leading "v")
+          # Extract current version tag from the formula's source tarball URL
           CURRENT=$(curl -sf "https://raw.githubusercontent.com/${GH_REPO_CONTEXT}/main/Formula/wasmer.rb" \
-            | grep -oP 'wasmer/releases/download/\K[^/]+' | head -1)
+            | grep -oP 'wasmer/archive/refs/tags/\Kv[^.]+\.[^.]+\.[^.]+(?=\.tar\.gz)')
           echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
 
           if [ "$LATEST" = "$CURRENT" ]; then
@@ -41,34 +41,22 @@ jobs:
         env:
           TAG: ${{ steps.check.outputs.latest }}
         run: |
-          ARM64_URL="https://github.com/wasmerio/wasmer/releases/download/${TAG}/wasmer-darwin-arm64.tar.gz"
-          AMD64_URL="https://github.com/wasmerio/wasmer/releases/download/${TAG}/wasmer-darwin-amd64.tar.gz"
+          SOURCE_URL="https://github.com/wasmerio/wasmer/archive/refs/tags/${TAG}.tar.gz"
+          SOURCE_SHA=$(curl -sfL "$SOURCE_URL" | shasum -a 256 | awk '{print $1}')
 
-          ARM64_SHA=$(curl -sfL "$ARM64_URL" | shasum -a 256 | awk '{print $1}')
-          AMD64_SHA=$(curl -sfL "$AMD64_URL" | shasum -a 256 | awk '{print $1}')
-
-          if ! echo "$ARM64_SHA" | grep -qE '^[0-9a-f]{64}$'; then
-            echo "::error::Failed to compute ARM64 checksum"
-            exit 1
-          fi
-          if ! echo "$AMD64_SHA" | grep -qE '^[0-9a-f]{64}$'; then
-            echo "::error::Failed to compute AMD64 checksum"
+          if ! echo "$SOURCE_SHA" | grep -qE '^[0-9a-f]{64}$'; then
+            echo "::error::Failed to compute source tarball checksum"
             exit 1
           fi
 
           # Extract old version tag from the formula
-          OLD_TAG=$(grep -oP 'wasmer/releases/download/\K[^/]+' Formula/wasmer.rb | head -1)
+          OLD_TAG=$(grep -oP 'wasmer/archive/refs/tags/\Kv[^.]+\.[^.]+\.[^.]+(?=\.tar\.gz)' Formula/wasmer.rb)
 
-          # Update version tag in URLs
+          # Update version tag in URL
           sed -i "s|${OLD_TAG}|${TAG}|g" Formula/wasmer.rb
 
-          # Update the explicit version field (strip leading "v")
-          VERSION="${TAG#v}"
-          sed -i "s/version \".*\"/version \"${VERSION}\"/" Formula/wasmer.rb
-
-          # Update checksums
-          sed -i "/darwin-arm64/{n;s/sha256 \".*\"/sha256 \"${ARM64_SHA}\"/}" Formula/wasmer.rb
-          sed -i "/darwin-amd64/{n;s/sha256 \".*\"/sha256 \"${AMD64_SHA}\"/}" Formula/wasmer.rb
+          # Update source tarball checksum (the one right after the url line)
+          sed -i "/archive\/refs\/tags/{ n; s/sha256 \".*\"/sha256 \"${SOURCE_SHA}\"/; }" Formula/wasmer.rb
 
       - name: Commit and push
         if: steps.check.outputs.up_to_date == 'false'

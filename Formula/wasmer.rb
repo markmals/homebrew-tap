@@ -1,40 +1,35 @@
 class Wasmer < Formula
-  desc "Universal WebAssembly Runtime"
+  desc "Universal WebAssembly Runtime (with NAPI support)"
   homepage "https://wasmer.io"
-  version "7.0.1"
+  url "https://github.com/wasmerio/wasmer/archive/refs/tags/v7.0.1.tar.gz"
+  sha256 "1cd67765b834dd509d29fd7420819af37af852b877bc32b31c07bf92d27ffd31"
   license "MIT"
+  head "https://github.com/wasmerio/wasmer.git", branch: "main"
 
-  # The homebrew-core wasmer formula builds from source without NAPI support.
-  # This formula installs the official pre-compiled binary which includes
-  # NAPI, required by Edge.js for --safe mode.
+  # The homebrew-core wasmer formula builds with only the cranelift feature.
+  # Edge.js --safe mode requires the napi-v8 feature, which is only available
+  # when building from source. This formula adds it.
 
-  depends_on :macos
-
-  if Hardware::CPU.arm?
-    url "https://github.com/wasmerio/wasmer/releases/download/v7.0.1/wasmer-darwin-arm64.tar.gz"
-    sha256 "3eff017389fb838b0b5af607a4d392edc6039e76343984fcd24307aa027d67ee"
-  else
-    url "https://github.com/wasmerio/wasmer/releases/download/v7.0.1/wasmer-darwin-amd64.tar.gz"
-    sha256 "3a0f44a3aae570b0870d4573fa663c7f0c96a2f9550e38eb22c3be7c77658a1e"
-  end
+  depends_on "cmake" => :build
+  depends_on "pkgconf" => :build
+  depends_on "rust" => :build
+  depends_on "wabt" => :build
 
   conflicts_with "wasmer", because: "both install a `wasmer` binary"
 
   def install
-    # The tarball extracts with this layout:
-    #   bin/wasmer
-    #   bin/wasmer-headless
-    #   lib/libwasmer.{a,dylib}
-    #   lib/libwasmer-headless.{a,dylib}
-    #   include/*.h
+    system "cargo", "install", *std_cargo_args(path: "lib/cli", features: "cranelift,napi-v8")
 
-    bin.install "bin/wasmer"
-    bin.install "bin/wasmer-headless"
-    lib.install Dir["lib/*"]
-    include.install Dir["include/*"]
+    generate_completions_from_executable(bin/"wasmer", "gen-completions")
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/wasmer --version")
+    # Verify NAPI feature is present
+    assert_match "NAPI", shell_output("#{bin}/wasmer --version -v")
+
+    wasm = ["0061736d0100000001070160027f7f017f030201000707010373756d00000a09010700200020016a0b"].pack("H*")
+    (testpath/"sum.wasm").write(wasm)
+    assert_equal "3\n",
+      shell_output("#{bin}/wasmer run #{testpath/"sum.wasm"} --invoke sum 1 2")
   end
 end
