@@ -12,7 +12,7 @@ class EdgeJs < Formula
 
   depends_on arch: :arm64
   depends_on :macos
-  depends_on "wasmer"
+  depends_on "markmals/tap/wasmer"
 
   def install
     # The zip extracts a bundle structured as:
