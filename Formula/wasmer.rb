@@ -1,6 +1,7 @@
 class Wasmer < Formula
   desc "Universal WebAssembly Runtime"
   homepage "https://wasmer.io"
+  version "7.0.1"
   license "MIT"
 
   # The homebrew-core wasmer formula builds from source without NAPI support.

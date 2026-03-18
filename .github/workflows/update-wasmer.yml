@@ -62,6 +62,10 @@ jobs:
           # Update version tag in URLs
           sed -i "s|${OLD_TAG}|${TAG}|g" Formula/wasmer.rb
 
+          # Update the explicit version field (strip leading "v")
+          VERSION="${TAG#v}"
+          sed -i "s/version \".*\"/version \"${VERSION}\"/" Formula/wasmer.rb
+
           # Update checksums
           sed -i "/darwin-arm64/{n;s/sha256 \".*\"/sha256 \"${ARM64_SHA}\"/}" Formula/wasmer.rb
           sed -i "/darwin-amd64/{n;s/sha256 \".*\"/sha256 \"${AMD64_SHA}\"/}" Formula/wasmer.rb
