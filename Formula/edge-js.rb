@@ -1,9 +1,9 @@
 class EdgeJs < Formula
   desc "Secure JavaScript runtime for Edge computing and AI workloads"
   homepage "https://github.com/wasmerio/edgejs"
-  url "https://github.com/wasmerio/edgejs-nightlies/releases/download/0.0.0-nightly/edge-darwin-arm64.zip"
-  version "0.0.0-nightly"
-  sha256 "da039a1c249b8c0e3c3686839492dde8d20f83ac1269b9d19daf9a183d885616"
+  url "https://github.com/wasmerio/edgejs/releases/download/{"message":"Not Found","documentation_url":"https://docs.github.com/rest/releases/releases#get-the-latest-release","status":"404"}/edge-darwin-arm64.zip"
+  version "{"message":"Not Found","documentation_url":"https://docs.github.com/rest/releases/releases#get-the-latest-release","status":"404"}"
+  sha256 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   license "MIT"
 
   # No stable releases exist yet — using the nightlies repo.
