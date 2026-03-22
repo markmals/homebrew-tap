@@ -45,6 +45,15 @@ class VitePlus < Formula
       ENV["CI"] = "true"
       system bin/"vp", "install", "--silent"
     end
+
+    # `vp env setup` creates shims in ~/.vite-plus/bin/ that resolve through
+    # ../current/bin/vp. Standalone installs create this symlink automatically,
+    # but Homebrew installs don't — create it so the shims work.
+    vp_home = Pathname.new(Dir.home)/".vite-plus"
+    vp_home.mkpath
+    current = vp_home/"current"
+    current.unlink if current.exist? || current.symlink?
+    current.make_symlink(libexec)
   end
 
   def caveats
