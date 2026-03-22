@@ -53,8 +53,12 @@ class VitePlus < Formula
 
       Run `vp create` to start a project.
 
-      If you want Vite+ to manage Node versions:
+      If you use a Node version manager (mise, nvm, fnm, etc.),
+      it may shadow the Node version that Vite+ manages. Run:
+
           vp env setup
+
+      to add Vite+'s managed Node to your shell PATH.
 
       Try:
           vp --version
