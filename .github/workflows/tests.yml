@@ -34,10 +34,10 @@ jobs:
           sudo xcode-select -s "$XC/Contents/Developer"
           swift --version
 
+      - run: brew test-bot --only-cleanup-before
+
       - name: Trust the tap
         run: brew trust --tap markmals/tap
-
-      - run: brew test-bot --only-cleanup-before
 
       - run: brew test-bot --only-setup
 
