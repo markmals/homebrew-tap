@@ -6,17 +6,19 @@ on:
       - main
   pull_request:
 
+# Allow this tap (markmals/tap) to load in CI. test-bot's internal `brew doctor`
+# fails on untrusted taps, and `brew trust` does not satisfy it; the only non-official
+# tap here is our own, so there is no third-party tap to protect against. This is the
+# convention real taps use (e.g. chenrui333/homebrew-tap, a Homebrew maintainer's tap).
+env:
+  HOMEBREW_NO_REQUIRE_TAP_TRUST: "1"
+
 jobs:
   test-bot:
     strategy:
       matrix:
         os: [macos-15, macos-26]
     runs-on: ${{ matrix.os }}
-    # Allow this tap (markmals/tap) to load in CI. `brew trust --tap` does not
-    # satisfy test-bot's internal `brew doctor`, and the only non-official tap in
-    # this job is our own — there is no third-party tap to be protected from here.
-    env:
-      HOMEBREW_NO_REQUIRE_TAP_TRUST: "1"
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
@@ -31,9 +33,10 @@ jobs:
 
       - name: Select Xcode 26.x
         run: |
-          XC=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          XC=$(find /Applications -maxdepth 1 -name 'Xcode_26*.app' | sort -V | tail -1)
           if [ -z "$XC" ]; then
-            echo "No Xcode 26.x found on $(sw_vers -productVersion). Available:"; ls -d /Applications/Xcode*.app
+            echo "No Xcode 26.x found on $(sw_vers -productVersion). Available:"
+            find /Applications -maxdepth 1 -name 'Xcode*.app'
             exit 1
           fi
           sudo xcode-select -s "$XC/Contents/Developer"
