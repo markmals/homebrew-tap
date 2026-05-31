@@ -4,13 +4,12 @@ class Remctl < Formula
   url "https://github.com/markmals/remctl/archive/refs/tags/v0.1.0.tar.gz"
   sha256 "0d54f7f181826ca0b7760a409d9ef177ebd04400a6cdf7cd851d1ea06e28073f"
   license "MIT"
+  head "https://github.com/markmals/remctl.git", branch: "main"
 
   # Populated by `brew pr-pull` from the CI-built bottles (this seed is replaced).
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_tahoe: "85109f906d024fb354007ebc355689910a401ca8b43bb63d4b5148e57a11edf9"
   end
-
-  head "https://github.com/markmals/remctl.git", branch: "main"
 
   depends_on xcode: ["16.0", :build]
   depends_on macos: :sonoma
