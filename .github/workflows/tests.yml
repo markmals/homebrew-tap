@@ -24,6 +24,19 @@ jobs:
           key: ${{ matrix.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
           restore-keys: ${{ matrix.os }}-rubygems-
 
+      - name: Select Xcode 26.x
+        run: |
+          XC=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$XC" ]; then
+            echo "No Xcode 26.x found on $(sw_vers -productVersion). Available:"; ls -d /Applications/Xcode*.app
+            exit 1
+          fi
+          sudo xcode-select -s "$XC/Contents/Developer"
+          swift --version
+
+      - name: Trust the tap
+        run: brew trust --tap markmals/tap
+
       - run: brew test-bot --only-cleanup-before
 
       - run: brew test-bot --only-setup

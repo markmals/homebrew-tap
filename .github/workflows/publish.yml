@@ -8,6 +8,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  packages: write
 
 jobs:
   pr-pull:
@@ -19,6 +20,9 @@ jobs:
 
       - name: Set up git
         uses: Homebrew/actions/git-user-config@master
+
+      - name: Trust the tap
+        run: brew trust --tap markmals/tap
 
       - name: Pull bottles
         env:

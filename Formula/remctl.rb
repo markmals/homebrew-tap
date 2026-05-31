@@ -1,8 +1,8 @@
 class Remctl < Formula
   desc "Power-user CLI for Apple Reminders"
   homepage "https://github.com/markmals/remctl"
-  url "https://github.com/markmals/remctl/archive/refs/tags/v2.0.0.tar.gz"
-  sha256 "c9678583fca426997a67cc88e6cbd2205cceb9b7954f26f245b8afd7433ef3ff"
+  url "https://github.com/markmals/remctl/archive/refs/tags/v0.1.0.tar.gz"
+  sha256 "0d54f7f181826ca0b7760a409d9ef177ebd04400a6cdf7cd851d1ea06e28073f"
   license "MIT"
   head "https://github.com/markmals/remctl.git", branch: "main"
 
@@ -35,7 +35,7 @@ class Remctl < Formula
   end
 
   test do
-    assert_match "2.0.0", shell_output("#{bin}/remctl --version")
+    assert_match "0.1.0", shell_output("#{bin}/remctl --version")
     assert_match "Power-user CLI for Apple Reminders", shell_output("#{bin}/remctl --help")
   end
 end
