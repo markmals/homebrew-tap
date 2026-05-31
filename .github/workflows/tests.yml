@@ -12,6 +12,11 @@ jobs:
       matrix:
         os: [macos-15, macos-26]
     runs-on: ${{ matrix.os }}
+    # Allow this tap (markmals/tap) to load in CI. `brew trust --tap` does not
+    # satisfy test-bot's internal `brew doctor`, and the only non-official tap in
+    # this job is our own — there is no third-party tap to be protected from here.
+    env:
+      HOMEBREW_NO_REQUIRE_TAP_TRUST: "1"
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
@@ -35,9 +40,6 @@ jobs:
           swift --version
 
       - run: brew test-bot --only-cleanup-before
-
-      - name: Trust the tap
-        run: brew trust --tap markmals/tap
 
       - run: brew test-bot --only-setup
 

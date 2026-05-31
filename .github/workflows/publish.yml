@@ -14,15 +14,14 @@ jobs:
   pr-pull:
     if: contains(github.event.pull_request.labels.*.name, 'pr-pull')
     runs-on: ubuntu-22.04
+    env:
+      HOMEBREW_NO_REQUIRE_TAP_TRUST: "1"
     steps:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
       - name: Set up git
         uses: Homebrew/actions/git-user-config@master
-
-      - name: Trust the tap
-        run: brew trust --tap markmals/tap
 
       - name: Pull bottles
         env:
