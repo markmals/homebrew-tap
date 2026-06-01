@@ -43,7 +43,7 @@ class Remctl < Formula
   end
 
   test do
-    assert_match "0.1.0", shell_output("#{bin}/remctl --version")
+    assert_match version.to_s, shell_output("#{bin}/remctl --version")
     assert_match "Power-user CLI for Apple Reminders", shell_output("#{bin}/remctl --help")
   end
 end
