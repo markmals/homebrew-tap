@@ -18,10 +18,10 @@ jobs:
       HOMEBREW_NO_REQUIRE_TAP_TRUST: "1"
     steps:
       - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
+        uses: Homebrew/actions/setup-homebrew@main
 
       - name: Set up git
-        uses: Homebrew/actions/git-user-config@master
+        uses: Homebrew/actions/git-user-config@main
 
       - name: Pull bottles
         env:
@@ -30,7 +30,7 @@ jobs:
         run: brew pr-pull --debug --tap="${{ github.repository }}" "$PULL_REQUEST"
 
       - name: Push commits
-        uses: Homebrew/actions/git-try-push@master
+        uses: Homebrew/actions/git-try-push@main
         with:
           token: ${{ github.token }}
           branch: main
