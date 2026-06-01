@@ -40,4 +40,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
-        run: git push --delete origin "$BRANCH_NAME"
+        # Qualify as refs/heads/: pr-pull creates a bottle-hosting tag with the same
+        # name as the PR branch (remctl-<version>), so an unqualified delete is
+        # ambiguous ("matches more than one"). Non-fatal — cleanup, not publish.
+        run: git push origin --delete "refs/heads/$BRANCH_NAME" || true
