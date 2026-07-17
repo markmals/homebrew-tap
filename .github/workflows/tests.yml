@@ -16,8 +16,9 @@ env:
 jobs:
   test-bot:
     strategy:
+      fail-fast: false
       matrix:
-        os: [macos-15, macos-26]
+        os: [macos-15, macos-26, ubuntu-24.04]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Set up Homebrew
@@ -32,6 +33,7 @@ jobs:
           restore-keys: ${{ matrix.os }}-rubygems-
 
       - name: Select Xcode 26.x
+        if: runner.os == 'macOS'
         run: |
           XC=$(find /Applications -maxdepth 1 -name 'Xcode_26*.app' | sort -V | tail -1)
           if [ -z "$XC" ]; then
