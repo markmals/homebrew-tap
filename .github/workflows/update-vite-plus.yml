@@ -19,7 +19,7 @@ jobs:
           echo "latest=$LATEST" >> "$GITHUB_OUTPUT"
 
           # Extract current version from the arm64 URL in the formula
-          CURRENT=$(curl -sf "https://raw.githubusercontent.com/${{ github.repository }}/main/Formula/vite-plus.rb" | grep -oP 'darwin-arm64-\K[\d.]+(?=\.tgz)')
+          CURRENT=$(curl -sf "https://raw.githubusercontent.com/${{ github.repository }}/main/Formula/vite-plus.rb" | grep -oP 'darwin-arm64-\K[^/"]+(?=\.tgz)')
           echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
 
           if [ "$LATEST" = "$CURRENT" ]; then
@@ -55,7 +55,7 @@ jobs:
           fi
 
           # Extract current version from the formula
-          OLD_VERSION=$(grep -oP 'darwin-arm64-\K[\d.]+(?=\.tgz)' Formula/vite-plus.rb)
+          OLD_VERSION=$(grep -oP 'darwin-arm64-\K[^/"]+(?=\.tgz)' Formula/vite-plus.rb)
 
           # Update version in URLs and checksums
           sed -i "s/${OLD_VERSION}/${VERSION}/g" Formula/vite-plus.rb
