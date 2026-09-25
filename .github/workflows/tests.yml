@@ -6,13 +6,6 @@ on:
       - main
   pull_request:
 
-# Allow this tap (markmals/tap) to load in CI. test-bot's internal `brew doctor`
-# fails on untrusted taps, and `brew trust` does not satisfy it; the only non-official
-# tap here is our own, so there is no third-party tap to protect against. This is the
-# convention real taps use (e.g. chenrui333/homebrew-tap, a Homebrew maintainer's tap).
-env:
-  HOMEBREW_NO_REQUIRE_TAP_TRUST: "1"
-
 jobs:
   test-bot:
     strategy:
