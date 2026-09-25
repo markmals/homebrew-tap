@@ -39,23 +39,11 @@ class VitePlus < Formula
     bin.install_symlink libexec/"bin/vpr"
   end
 
-  def post_install
-    # Bootstrap JS dependencies using vp itself (no external node required).
-    # This runs outside the sandbox so vp can download Node if needed.
-    # CI=true suppresses interactive prompts (e.g., Node manager setup).
-    cd libexec do
-      ENV["CI"] = "true"
-      system bin/"vp", "install", "--silent"
-    end
-
-    # `vp env setup` creates shims in ~/.vite-plus/bin/ that resolve through
-    # ../current/bin/vp. Standalone installs create this symlink automatically,
-    # but Homebrew installs don't — create it so the shims work.
-    vp_home = Pathname.new(Dir.home)/".vite-plus"
-    vp_home.mkpath
-    current = vp_home/"current"
-    current.unlink if current.exist? || current.symlink?
-    current.make_symlink(libexec)
+  # Bootstrap JS dependencies using vp itself (no external node required).
+  # CI=true suppresses interactive prompts (e.g., Node manager setup).
+  post_install_steps do
+    run "vp", args: ["install", "--silent"], base: :bin, env: { "CI" => "true" }, chdir: "{{libexec}}",
+              network_access: true
   end
 
   def caveats
