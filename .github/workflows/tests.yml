@@ -5,6 +5,10 @@ on:
     branches:
       - main
   pull_request:
+  # Bot version bumps push with GITHUB_TOKEN, which doesn't trigger `push`.
+  schedule:
+    - cron: "0 13 * * 1" # Mondays 13:00 UTC, after the daily Vite+ update
+  workflow_dispatch:
 
 jobs:
   test-bot:
