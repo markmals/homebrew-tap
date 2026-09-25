@@ -13,8 +13,8 @@ class VitePlus < Formula
   end
 
   def install
-    # Install binary into libexec/bin/ so it sits inside a version directory
-    # that mirrors the structure the install script creates (~/.vite-plus/<ver>/)
+    # vp loads its JS CLI from node_modules in the directory above its binary;
+    # without it, JS-backed commands download the CLI into the user's data dir.
     (libexec/"bin").install Dir["**/vp"].first => "vp"
 
     # Create wrapper package.json so `vp install` can pull down the JS CLI
