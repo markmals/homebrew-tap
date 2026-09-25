@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-15, macos-26, ubuntu-24.04]
+        os: [macos-15, macos-26, xcode-27, ubuntu-24.04]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Set up Homebrew
@@ -29,12 +29,12 @@ jobs:
           key: ${{ matrix.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
           restore-keys: ${{ matrix.os }}-rubygems-
 
-      - name: Select Xcode 26.x
+      - name: Select newest Xcode
         if: runner.os == 'macOS'
         run: |
-          XC=$(find /Applications -maxdepth 1 -name 'Xcode_26*.app' | sort -V | tail -1)
+          XC=$(find /Applications -maxdepth 1 -name 'Xcode_[0-9]*.app' | sort -V | tail -1)
           if [ -z "$XC" ]; then
-            echo "No Xcode 26.x found on $(sw_vers -productVersion). Available:"
+            echo "No versioned Xcode found on $(sw_vers -productVersion). Available:"
             find /Applications -maxdepth 1 -name 'Xcode*.app'
             exit 1
           fi
