@@ -2,8 +2,8 @@ class ApplePlatformTools < Formula
   desc "Agent-first CLIs for Apple SDK lookup and Mach-O inspection"
   homepage "https://github.com/markmals/apple-platform-tools"
   url "https://github.com/markmals/apple-platform-tools.git",
+      tag:      "v0.1.0",
       revision: "b78b83d6580dbab2d75f5a3e5b53f4a5f30b17ed"
-  version "0.1.0"
   head "https://github.com/markmals/apple-platform-tools.git", branch: "main"
 
   depends_on xcode: ["26.0", :build]
