@@ -72,6 +72,6 @@ class VitePlus < Formula
   test do
     assert_match version.to_s, shell_output("#{bin}/vp --version")
     assert_match "Usage: vpx", shell_output("#{bin}/vpx --help")
-    assert_match "Usage: vpr", shell_output("#{bin}/vpr --help")
+    assert_match "Usage: vp run", shell_output("#{bin}/vpr --help")
   end
 end
