@@ -41,9 +41,10 @@ class VitePlus < Formula
 
   # Bootstrap JS dependencies using vp itself (no external node required).
   # CI=true suppresses interactive prompts (e.g., Node manager setup).
+  # pnpm otherwise puts its store in the rack, outside the keg, where uninstall leaves it.
   post_install_steps do
-    run "vp", args: ["install", "--silent"], base: :bin, env: { "CI" => "true" }, chdir: "{{libexec}}",
-              network_access: true
+    run "vp", args: ["install", "--silent"], base: :bin, chdir: "{{libexec}}", network_access: true,
+              env: { "CI" => "true", "pnpm_config_store_dir" => "{{libexec}}/.pnpm-store" }
   end
 
   def caveats
