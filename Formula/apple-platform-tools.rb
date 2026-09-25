@@ -6,6 +6,13 @@ class ApplePlatformTools < Formula
       revision: "b78b83d6580dbab2d75f5a3e5b53f4a5f30b17ed"
   head "https://github.com/markmals/apple-platform-tools.git", branch: "main"
 
+  bottle do
+    root_url "https://github.com/markmals/homebrew-tap/releases/download/apple-platform-tools-0.1.0"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "bbf9394253d37e9b9f21fad094b824293ed3cfe51b98be25b0cb66230759b7b8"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "a3527c20fdb55b2c78c45b293f76d1a1112d7da827c31b2f6b85bcc11f3071de"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "92eef078dc2b78a6be998148d57cb844326675fa5edf2592a1fa1359f32df851"
+  end
+
   depends_on xcode: ["26.0", :build]
   depends_on macos: :sequoia
 
