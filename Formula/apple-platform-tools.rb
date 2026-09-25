@@ -17,17 +17,18 @@ class ApplePlatformTools < Formula
       system "swift", "build", "--disable-sandbox", "--configuration", "release", "--product", tool
     end
 
-    # Bundle.module resolves resource bundles next to the executable.
+    # Swift 6.3 and older look for resource bundles next to the invoked path, not the
+    # resolved binary, so bin/ gets exec scripts rather than symlinks into libexec/.
     libexec.install tools.map { |tool| ".build/release/#{tool}" }, Dir[".build/release/*.bundle"]
-    bin.install_symlink tools.map { |tool| libexec/tool }
+    bin.write_exec_script tools.map { |tool| libexec/tool }
   end
 
   test do
-    # sdk-search traps if its corpus bundle isn't next to the real binary.
+    # sdk-search traps if it can't find its corpus bundle.
     corpus = JSON.parse(shell_output("#{bin}/sdk-search list"))
     refute_empty corpus["categories"]
 
-    info = JSON.parse(shell_output("#{bin}/redump info #{bin}/redump"))
+    info = JSON.parse(shell_output("#{bin}/redump info #{libexec}/redump"))
     assert_equal [Hardware::CPU.arch.to_s], info["archs"]
     assert_equal "execute", info["fileType"]
 
