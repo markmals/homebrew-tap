@@ -53,8 +53,7 @@ jobs:
         run: |
           brew test-bot \
             --skip-online-checks \
-            --only-formulae \
-            --skip-recursive-dependents
+            --only-formulae
           # List created bottle files for debugging
           echo "Bottle files in current directory:"
           find . -name "*.bottle.*" -type f 2>/dev/null || true
