@@ -9,9 +9,9 @@ class ApplePlatformTools < Formula
   bottle do
     root_url "https://github.com/markmals/homebrew-tap/releases/download/apple-platform-tools-0.1.0"
     rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "bbf9394253d37e9b9f21fad094b824293ed3cfe51b98be25b0cb66230759b7b8"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "a3527c20fdb55b2c78c45b293f76d1a1112d7da827c31b2f6b85bcc11f3071de"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "92eef078dc2b78a6be998148d57cb844326675fa5edf2592a1fa1359f32df851"
+    sha256 cellar: :any, arm64_golden_gate: "830a14b03dd048fee68876534adac2325f65dd10cd32ac7268d566d0376d2f0e"
+    sha256 cellar: :any, arm64_tahoe:       "1ae3d9e6ffe2c841a39c6efedb686bfd69f6f2027d730082c5b41bcd7044134c"
+    sha256 cellar: :any, arm64_sequoia:     "a85c79d3d4749e17b1881b4c655f268beec0d3f1f6ed4cb4f0d21b6e744ff73d"
   end
 
   depends_on xcode: ["26.0", :build]
