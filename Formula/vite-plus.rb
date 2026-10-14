@@ -5,11 +5,11 @@ class VitePlus < Formula
   depends_on :macos
 
   if Hardware::CPU.arm?
-    url "https://registry.npmjs.org/@voidzero-dev/vite-plus-cli-darwin-arm64/-/vite-plus-cli-darwin-arm64-1.1.0.tgz"
-    sha256 "293cc3b7a2e4ef1d11b4837cccabe4829637f9f5e8d0f1ae796e873263f51d77"
+    url "https://registry.npmjs.org/@voidzero-dev/vite-plus-cli-darwin-arm64/-/vite-plus-cli-darwin-arm64-1.2.0.tgz"
+    sha256 "8effb83d35529d904f149917db874d9547fb147e86c83920334ec33f8713928e"
   else
-    url "https://registry.npmjs.org/@voidzero-dev/vite-plus-cli-darwin-x64/-/vite-plus-cli-darwin-x64-1.1.0.tgz"
-    sha256 "20cdd50d7eef1b627346e554a1be2389dc4880ba5240bfbce4e0307e6f5f8182"
+    url "https://registry.npmjs.org/@voidzero-dev/vite-plus-cli-darwin-x64/-/vite-plus-cli-darwin-x64-1.2.0.tgz"
+    sha256 "2a3d0fe0574306996e61491658a35d4e1f2e9fd7a91c0d6c5f0ac136aee7c67d"
   end
 
   def install
