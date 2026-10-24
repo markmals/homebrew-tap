@@ -8,9 +8,10 @@ class Remctl < Formula
 
   # Populated by `brew pr-pull` from the CI-built bottles (this seed is replaced).
   bottle do
-    root_url "https://github.com/markmals/homebrew-tap/releases/download/remctl-0.2.0"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:   "107b7ed82b38547a6d154d1981095644ca6f16e652d9f451e753f9985bbaa954"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "42ea3b9e18f9b117e5f4403b3e9bf6b95bfca4926c9e302cff039ffa7fd2eb49"
+    root_url "https://github.com/markmals/homebrew-tap/releases/download/remctl-0.2.1"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "da156b8a70762a4a461e910d27e051d6b48f2c7e548c9161ffa68e9daeff7ed0"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "38fdd6acd1b4c68e5340d80282577ea90b8c3c11bee0e685812153cfbba2780c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "7d1725f09ccb3fee8f20f3b61be4d18dac01217a705cef3259384afb320e3924"
   end
 
   depends_on xcode: ["16.0", :build]
