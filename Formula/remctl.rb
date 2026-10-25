@@ -17,9 +17,14 @@ class Remctl < Formula
   depends_on xcode: ["16.0", :build]
   depends_on macos: :sonoma
 
+  # remctl answers to all three names; keith/reminders-cli ships its own `reminders`.
+  conflicts_with "keith/formulae/reminders-cli", because: "both install a `reminders` binary"
+
   def install
     system "swift", "build", "--disable-sandbox", "-c", "release"
     bin.install ".build/release/remctl"
+    bin.install_symlink "remctl" => "rctl"
+    bin.install_symlink "remctl" => "reminders"
   end
 
   def caveats
@@ -45,5 +50,6 @@ class Remctl < Formula
   test do
     assert_match version.to_s, shell_output("#{bin}/remctl --version")
     assert_match "Power-user CLI for Apple Reminders", shell_output("#{bin}/remctl --help")
+    assert_match "USAGE: rctl", shell_output("#{bin}/rctl --help")
   end
 end
