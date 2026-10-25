@@ -17,9 +17,6 @@ class Remctl < Formula
   depends_on xcode: ["16.0", :build]
   depends_on macos: :sonoma
 
-  # remctl answers to all three names; keith/reminders-cli ships its own `reminders`.
-  conflicts_with "keith/formulae/reminders-cli", because: "both install a `reminders` binary"
-
   def install
     system "swift", "build", "--disable-sandbox", "-c", "release"
     bin.install ".build/release/remctl"
@@ -44,6 +41,9 @@ class Remctl < Formula
 
       Permissions are per-app: a green `remctl doctor` in one terminal does not
       grant access to a different terminal, app, or agent runner.
+
+      remctl also answers to `rctl` and `reminders`. keith/reminders-cli installs
+      its own `reminders`, so only one of the two can be linked at a time.
     EOS
   end
 
