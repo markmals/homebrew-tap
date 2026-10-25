@@ -1,8 +1,8 @@
 class Remctl < Formula
   desc "Power-user CLI for Apple Reminders"
   homepage "https://github.com/markmals/remctl"
-  url "https://github.com/markmals/remctl/archive/refs/tags/v0.2.1.tar.gz"
-  sha256 "1756f612323dcb90ee842d0e0877f5045a264e9e19cc98cc19d8d61424f24d87"
+  url "https://github.com/markmals/remctl/archive/refs/tags/v0.3.0.tar.gz"
+  sha256 "076ba09eb5220245034f3b22c7e0e631516fdfba62b086b3a41b23e0677870c2"
   license "MIT"
   head "https://github.com/markmals/remctl.git", branch: "main"
 
