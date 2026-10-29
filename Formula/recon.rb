@@ -49,6 +49,6 @@ class Recon < Formula
     end
     assert_match(/\A[0-9a-f]{64}\n\z/, (libexec/"bin/recon-helper.build-id").read)
     assert_match "Identifier=me.malstrom.recon",
-                 shell_output("codesign -d #{libexec/"bin/recon"} 2>&1")
+                 shell_output("codesign -dv #{libexec/"bin/recon"} 2>&1")
   end
 end
