@@ -14,10 +14,13 @@ class Recon < Formula
   depends_on "node" => :build
   depends_on "rust" => :build
   depends_on xcode: ["26.0", :build]
+  depends_on arch: :arm64
   depends_on macos: :sequoia
 
   def install
     system "cargo", "install", *std_cargo_args(root: libexec, path: "crates/recon")
+    system "codesign", "--force", "--sign", "-", "--identifier", "me.malstrom.recon",
+           libexec/"bin/recon"
     system "node", "tools/build-helper.ts"
     system "node", "tools/build-loader.ts"
 
@@ -45,5 +48,7 @@ class Recon < Formula
       assert_path_exists libexec/"bin"/artifact
     end
     assert_match(/\A[0-9a-f]{64}\n\z/, (libexec/"bin/recon-helper.build-id").read)
+    assert_match "Identifier=me.malstrom.recon",
+                 shell_output("codesign -d #{libexec/"bin/recon"} 2>&1")
   end
 end
