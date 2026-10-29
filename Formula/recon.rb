@@ -9,6 +9,9 @@ class Recon < Formula
 
   bottle do
     root_url "https://github.com/markmals/homebrew-tap/releases/download/recon-0.1.1"
+    sha256 cellar: :any, arm64_golden_gate: "3346548912a77566baf0c53e2cfa6f8b3f341aebad424d81ab5e41f80d910e8e"
+    sha256 cellar: :any, arm64_tahoe:       "b5a3192be1879352d8bec75aaf24328d68d15ff482ab8898d511c98c6787fbdc"
+    sha256 cellar: :any, arm64_sequoia:     "0878a156c99e66475ecec9513bb8a23347bf9678fec3a2c9e283bdc5543852f1"
   end
 
   depends_on "node" => :build
