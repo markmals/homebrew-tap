@@ -2,16 +2,16 @@ class Recon < Formula
   desc "Inspect applications without activating them"
   homepage "https://github.com/markmals/recon"
   url "https://github.com/markmals/recon.git",
-      tag:      "v0.1.1",
-      revision: "97bcfc9f46545eee1bb5fdd2fd215685b4a2d72a"
+      tag:      "v0.1.2",
+      revision: "6801174b6cbce504886a0e75305e54542b4f4fd7"
   license "MIT"
   head "https://github.com/markmals/recon.git", branch: "main"
 
   bottle do
-    root_url "https://github.com/markmals/homebrew-tap/releases/download/recon-0.1.1"
-    sha256 cellar: :any, arm64_golden_gate: "3346548912a77566baf0c53e2cfa6f8b3f341aebad424d81ab5e41f80d910e8e"
-    sha256 cellar: :any, arm64_tahoe:       "b5a3192be1879352d8bec75aaf24328d68d15ff482ab8898d511c98c6787fbdc"
-    sha256 cellar: :any, arm64_sequoia:     "0878a156c99e66475ecec9513bb8a23347bf9678fec3a2c9e283bdc5543852f1"
+    root_url "https://github.com/markmals/homebrew-tap/releases/download/recon-0.1.2"
+    sha256 cellar: :any, arm64_golden_gate: "1358e9108122832302193b0388f5f4354260add1bbd5a498c73e8388a11f35c5"
+    sha256 cellar: :any, arm64_tahoe:       "28c05aa4fdce50a7d54f516fcd522ae3ab90f4c25710c450fba9d16cd6061994"
+    sha256 cellar: :any, arm64_sequoia:     "9505b5ac577a79125d19e40f83c0ebc4b826be6afdecb616998fe73a2f7c4de2"
   end
 
   depends_on "node" => :build
