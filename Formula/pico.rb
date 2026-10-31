@@ -2,7 +2,7 @@ class Pico < Formula
   desc "ACP agent for Sesh built on the Oh My Pi SDK"
   homepage "https://github.com/markmals/pico"
   url "https://github.com/markmals/pico.git",
-      revision: "21d4faa54e6d795a9b3ccc772641605e536b7d3e"
+      revision: "797b7d3ec680b72b5fc3a3c6cac28ad3a3a162c7"
   version "0.0.0"
   license "MIT"
   head "https://github.com/markmals/pico.git", branch: "main"
