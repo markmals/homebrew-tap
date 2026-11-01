@@ -7,6 +7,13 @@ class Pico < Formula
   license "MIT"
   head "https://github.com/markmals/pico.git", branch: "main"
 
+  bottle do
+    root_url "https://github.com/markmals/homebrew-tap/releases/download/pico-0.1.0"
+    sha256 arm64_golden_gate: "c31bd3a58426ca9b9ce4098715c24a89baf52806a4e842b574f19ab30d94f2c0"
+    sha256 arm64_tahoe:       "71672e705665703e5c0d6fd3eda600e69965e84ba6fc3876efb776974f1de17d"
+    sha256 arm64_sequoia:     "b9220fa7567c14ed4f361c8f35090d35b6aecb06459da238eeae1c1df4892c6f"
+  end
+
   depends_on "bun" => :build
   depends_on arch: :arm64
   depends_on macos: :sonoma
