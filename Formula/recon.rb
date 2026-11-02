@@ -16,15 +16,17 @@ class Recon < Formula
 
   depends_on "node" => :build
   depends_on "rust" => :build
-  depends_on xcode: ["26.0", :build]
   depends_on arch: :arm64
-  depends_on macos: :sequoia
+  # Recon builds only with Apple's Swift build swiftlang-6.4.0.34.1, from Xcode 27.1 or the
+  # macOS 27 Command Line Tools, and its build fails naming any other compiler it finds.
+  depends_on macos: :golden_gate
 
   def install
     system "cargo", "install", *std_cargo_args(root: libexec, path: "crates/recon")
     system "codesign", "--force", "--sign", "-", "--identifier", "me.malstrom.recon",
            libexec/"bin/recon"
-    system "node", "tools/build-helper.ts"
+    # SwiftPM cannot start its own sandbox inside Homebrew's.
+    system "node", "tools/build-helper.ts", "--disable-sandbox"
     system "node", "tools/build-loader.ts"
 
     (libexec/"bin").install "target/recon-loader",
