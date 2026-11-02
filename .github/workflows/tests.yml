@@ -41,6 +41,15 @@ jobs:
           sudo xcode-select -s "$XC/Contents/Developer"
           swift --version
 
+      # Recon builds only with Apple's Swift build swiftlang-6.4.0.34.1. This image ships it in
+      # the Command Line Tools, not in its newest Xcode, so build with the Command Line Tools
+      # here. This also changes the compiler every other formula builds with on this image.
+      - name: Select the Command Line Tools on xcode-27
+        if: matrix.os == 'xcode-27'
+        run: |
+          sudo xcode-select -s /Library/Developer/CommandLineTools
+          swift --version
+
       - run: brew test-bot --only-cleanup-before
 
       - run: brew test-bot --only-setup
