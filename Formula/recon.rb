@@ -2,15 +2,10 @@ class Recon < Formula
   desc "Inspect applications without activating them"
   homepage "https://github.com/markmals/recon"
   url "https://github.com/markmals/recon.git",
-      tag:      "v0.1.4",
-      revision: "8e23d3df1b84c018cab10e2d0726b4a38539fe93"
+      tag:      "v0.1.5",
+      revision: "193e9adddf1ef340dce20b89c64cf7cd12fe0b07"
   license "MIT"
   head "https://github.com/markmals/recon.git", branch: "main"
-
-  bottle do
-    root_url "https://github.com/markmals/homebrew-tap/releases/download/recon-0.1.4"
-    sha256 cellar: :any, arm64_golden_gate: "a887678d7d6f9b4e2a0223fdde8af3605f343ee2c11f3e073829988b1b8ee8e5"
-  end
 
   depends_on "node" => :build
   depends_on "rust" => :build
