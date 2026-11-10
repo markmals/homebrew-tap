@@ -1,0 +1,60 @@
+name: Formula API
+
+# mise's brew manager reads api/formula/<name>.json to pour this tap's bottles,
+# so regenerate it whenever a formula or its bottles change.
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - Formula/**
+      - .github/scripts/generate-formula-api
+      - .github/workflows/formula-api.yml
+  # brew pr-pull and the Vite+ update push with GITHUB_TOKEN, which doesn't
+  # trigger `push`.
+  workflow_run:
+    workflows:
+      - brew pr-pull
+      - Update Vite+ Formula
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: formula-api
+
+jobs:
+  generate:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@main
+
+      - name: Set up git
+        uses: Homebrew/actions/git-user-config@main
+
+      - name: Generate
+        run: .github/scripts/generate-formula-api
+
+      - name: Commit
+        id: commit
+        run: |
+          git add api
+          if git diff --cached --quiet; then
+            echo "api/formula is current"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "api: regenerate formula metadata"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Push
+        if: steps.commit.outputs.changed == 'true'
+        uses: Homebrew/actions/git-try-push@main
+        with:
+          token: ${{ github.token }}
+          branch: main

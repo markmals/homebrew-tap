@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Write api/formula/<name>.json for each bottled formula, in the format of
+# Homebrew's formula API. mise's brew manager reads these files to pour the
+# bottles; without them it evaluates the Ruby formula and builds from source,
+# which it cannot do for a formula with a Git source. Formulae without a bottle
+# block get no file, so mise evaluates their Ruby, including on_macos/on_linux.
+set -euo pipefail
+
+if [ "$#" -ne 0 ]; then
+  printf 'usage: generate-formula-api\n' >&2
+  exit 2
+fi
+
+tap="markmals/tap"
+repository="$(brew --repository "$tap")"
+
+rm -rf "$repository/api/formula"
+mkdir -p "$repository/api/formula"
+for file in "$repository"/Formula/*.rb; do
+  grep -q '^  bottle do$' "$file" || continue
+  name="$(basename "$file" .rb)"
+  brew info --json=v1 --variations "$tap/$name" | jq '.[0]' >"$repository/api/formula/$name.json"
+done
