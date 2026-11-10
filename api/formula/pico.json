@@ -1,0 +1,128 @@
+{
+  "name": "pico",
+  "full_name": "markmals/tap/pico",
+  "tap": "markmals/tap",
+  "oldnames": [],
+  "aliases": [],
+  "versioned_formulae": [],
+  "desc": "ACP agent for Sesh built on the Oh My Pi SDK",
+  "license": "MIT",
+  "homepage": "https://github.com/markmals/pico",
+  "versions": {
+    "stable": "0.1.0",
+    "head": "HEAD",
+    "bottle": true
+  },
+  "urls": {
+    "stable": {
+      "url": "https://github.com/markmals/pico.git",
+      "tag": "v0.1.0",
+      "revision": "4735872b79fe960491ab54aede8467151eaa4eeb",
+      "using": null,
+      "checksum": null
+    },
+    "head": {
+      "url": "https://github.com/markmals/pico.git",
+      "branch": "main",
+      "using": null
+    }
+  },
+  "patches": [],
+  "local_patch_checksums": {},
+  "revision": 0,
+  "version_scheme": 0,
+  "compatibility_version": null,
+  "autobump": true,
+  "no_autobump_message": null,
+  "skip_livecheck": false,
+  "bottle": {
+    "stable": {
+      "rebuild": 0,
+      "root_url": "https://github.com/markmals/homebrew-tap/releases/download/pico-0.1.0",
+      "files": {
+        "arm64_golden_gate": {
+          "cellar": "/opt/homebrew/Cellar",
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/pico-0.1.0/pico-0.1.0.arm64_golden_gate.bottle.tar.gz",
+          "sha256": "c31bd3a58426ca9b9ce4098715c24a89baf52806a4e842b574f19ab30d94f2c0"
+        },
+        "arm64_tahoe": {
+          "cellar": "/opt/homebrew/Cellar",
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/pico-0.1.0/pico-0.1.0.arm64_tahoe.bottle.tar.gz",
+          "sha256": "71672e705665703e5c0d6fd3eda600e69965e84ba6fc3876efb776974f1de17d"
+        },
+        "arm64_sequoia": {
+          "cellar": "/opt/homebrew/Cellar",
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/pico-0.1.0/pico-0.1.0.arm64_sequoia.bottle.tar.gz",
+          "sha256": "b9220fa7567c14ed4f361c8f35090d35b6aecb06459da238eeae1c1df4892c6f"
+        }
+      }
+    }
+  },
+  "pour_bottle_only_if": null,
+  "keg_only": false,
+  "keg_only_reason": null,
+  "options": [],
+  "build_dependencies": [
+    "bun"
+  ],
+  "dependencies": [],
+  "test_dependencies": [],
+  "recommended_dependencies": [],
+  "optional_dependencies": [],
+  "no_linkage_dependencies": [],
+  "uses_from_macos": [],
+  "uses_from_macos_bounds": [],
+  "requirements": [
+    {
+      "name": "arch",
+      "cask": null,
+      "download": null,
+      "version": "arm64",
+      "contexts": [],
+      "specs": [
+        "stable",
+        "head"
+      ]
+    },
+    {
+      "name": "macos",
+      "cask": null,
+      "download": null,
+      "version": "14",
+      "contexts": [],
+      "specs": [
+        "stable",
+        "head"
+      ]
+    }
+  ],
+  "conflicts_with": [],
+  "conflicts_with_reasons": [],
+  "link_overwrite": [],
+  "caveats": "Sesh launches pico as an ACP agent. Add it in Sesh under Settings > Machines >\nthis Mac > Details... > Add an Agent... > Custom..., with the executable:\n  $HOMEBREW_PREFIX/bin/pico\n\nmacOS ships a text editor at /usr/bin/pico. With Homebrew first on your PATH,\n`pico` now runs Pico instead; `nano` or /usr/bin/pico still opens the editor.\n\nPico keeps its own files in ~/Library/Application Support/Pico. Uninstalling\nleaves that folder; delete it to remove them.\n",
+  "installed": [],
+  "linked_keg": null,
+  "pinned": false,
+  "outdated": false,
+  "deprecated": false,
+  "deprecation_date": null,
+  "deprecation_reason": null,
+  "deprecation_replacement_formula": null,
+  "deprecation_replacement_cask": null,
+  "deprecate_args": null,
+  "disabled": false,
+  "disable_date": null,
+  "disable_reason": null,
+  "disable_replacement_formula": null,
+  "disable_replacement_cask": null,
+  "disable_args": null,
+  "post_install_steps": [],
+  "post_install_defined": false,
+  "service": null,
+  "tap_git_head": "04ba25cbce27058b191834d6f7184047b625b0ca",
+  "ruby_source_path": "Formula/pico.rb",
+  "ruby_source_checksum": {
+    "sha256": "dcc7b55a97bf5bd5ee5e9b5d03b277aa9aaab8684195a63f7ccb34278c368317"
+  },
+  "variations": {}
+}

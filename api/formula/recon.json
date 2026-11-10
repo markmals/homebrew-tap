@@ -1,0 +1,119 @@
+{
+  "name": "recon",
+  "full_name": "markmals/tap/recon",
+  "tap": "markmals/tap",
+  "oldnames": [],
+  "aliases": [],
+  "versioned_formulae": [],
+  "desc": "Inspect applications without activating them",
+  "license": "MIT",
+  "homepage": "https://github.com/markmals/recon",
+  "versions": {
+    "stable": "0.1.5",
+    "head": "HEAD",
+    "bottle": true
+  },
+  "urls": {
+    "stable": {
+      "url": "https://github.com/markmals/recon.git",
+      "tag": "v0.1.5",
+      "revision": "193e9adddf1ef340dce20b89c64cf7cd12fe0b07",
+      "using": null,
+      "checksum": null
+    },
+    "head": {
+      "url": "https://github.com/markmals/recon.git",
+      "branch": "main",
+      "using": null
+    }
+  },
+  "patches": [],
+  "local_patch_checksums": {},
+  "revision": 0,
+  "version_scheme": 0,
+  "compatibility_version": null,
+  "autobump": true,
+  "no_autobump_message": null,
+  "skip_livecheck": false,
+  "bottle": {
+    "stable": {
+      "rebuild": 0,
+      "root_url": "https://github.com/markmals/homebrew-tap/releases/download/recon-0.1.5",
+      "files": {
+        "arm64_golden_gate": {
+          "cellar": ":any",
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/recon-0.1.5/recon-0.1.5.arm64_golden_gate.bottle.tar.gz",
+          "sha256": "0a210ff18a19d2c739ce3d1724e0c80c946a0497c9962ea9ac98499a0adebb8d"
+        }
+      }
+    }
+  },
+  "pour_bottle_only_if": null,
+  "keg_only": false,
+  "keg_only_reason": null,
+  "options": [],
+  "build_dependencies": [
+    "node",
+    "rust"
+  ],
+  "dependencies": [],
+  "test_dependencies": [],
+  "recommended_dependencies": [],
+  "optional_dependencies": [],
+  "no_linkage_dependencies": [],
+  "uses_from_macos": [],
+  "uses_from_macos_bounds": [],
+  "requirements": [
+    {
+      "name": "arch",
+      "cask": null,
+      "download": null,
+      "version": "arm64",
+      "contexts": [],
+      "specs": [
+        "stable",
+        "head"
+      ]
+    },
+    {
+      "name": "macos",
+      "cask": null,
+      "download": null,
+      "version": "27",
+      "contexts": [],
+      "specs": [
+        "stable",
+        "head"
+      ]
+    }
+  ],
+  "conflicts_with": [],
+  "conflicts_with_reasons": [],
+  "link_overwrite": [],
+  "caveats": "Recon's Homebrew builds are ad-hoc signed. Accessibility and Screen Recording\ngrants can need to be approved again after an upgrade or reinstall changes\nthe executable. Inspect the current installation without prompting by running:\n  recon context\n",
+  "installed": [],
+  "linked_keg": null,
+  "pinned": false,
+  "outdated": false,
+  "deprecated": false,
+  "deprecation_date": null,
+  "deprecation_reason": null,
+  "deprecation_replacement_formula": null,
+  "deprecation_replacement_cask": null,
+  "deprecate_args": null,
+  "disabled": false,
+  "disable_date": null,
+  "disable_reason": null,
+  "disable_replacement_formula": null,
+  "disable_replacement_cask": null,
+  "disable_args": null,
+  "post_install_steps": [],
+  "post_install_defined": false,
+  "service": null,
+  "tap_git_head": "04ba25cbce27058b191834d6f7184047b625b0ca",
+  "ruby_source_path": "Formula/recon.rb",
+  "ruby_source_checksum": {
+    "sha256": "6fbf507411c2bac269f8ccfb206c3e4ec73d3546cd6102fc7f13514314381b59"
+  },
+  "variations": {}
+}

@@ -1,0 +1,128 @@
+{
+  "name": "apple-platform-tools",
+  "full_name": "markmals/tap/apple-platform-tools",
+  "tap": "markmals/tap",
+  "oldnames": [],
+  "aliases": [],
+  "versioned_formulae": [],
+  "desc": "Agent-first CLIs for Apple SDK, Mach-O, and live UI inspection",
+  "license": null,
+  "homepage": "https://github.com/markmals/apple-platform-tools",
+  "versions": {
+    "stable": "0.1.0",
+    "head": "HEAD",
+    "bottle": true
+  },
+  "urls": {
+    "stable": {
+      "url": "https://github.com/markmals/apple-platform-tools.git",
+      "tag": "v0.1.0",
+      "revision": "b78b83d6580dbab2d75f5a3e5b53f4a5f30b17ed",
+      "using": null,
+      "checksum": null
+    },
+    "head": {
+      "url": "https://github.com/markmals/apple-platform-tools.git",
+      "branch": "main",
+      "using": null
+    }
+  },
+  "patches": [],
+  "local_patch_checksums": {},
+  "revision": 0,
+  "version_scheme": 0,
+  "compatibility_version": null,
+  "autobump": true,
+  "no_autobump_message": null,
+  "skip_livecheck": false,
+  "bottle": {
+    "stable": {
+      "rebuild": 1,
+      "root_url": "https://github.com/markmals/homebrew-tap/releases/download/apple-platform-tools-0.1.0",
+      "files": {
+        "arm64_golden_gate": {
+          "cellar": ":any",
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/apple-platform-tools-0.1.0/apple-platform-tools-0.1.0.arm64_golden_gate.bottle.1.tar.gz",
+          "sha256": "830a14b03dd048fee68876534adac2325f65dd10cd32ac7268d566d0376d2f0e"
+        },
+        "arm64_tahoe": {
+          "cellar": ":any",
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/apple-platform-tools-0.1.0/apple-platform-tools-0.1.0.arm64_tahoe.bottle.1.tar.gz",
+          "sha256": "1ae3d9e6ffe2c841a39c6efedb686bfd69f6f2027d730082c5b41bcd7044134c"
+        },
+        "arm64_sequoia": {
+          "cellar": ":any",
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/apple-platform-tools-0.1.0/apple-platform-tools-0.1.0.arm64_sequoia.bottle.1.tar.gz",
+          "sha256": "a85c79d3d4749e17b1881b4c655f268beec0d3f1f6ed4cb4f0d21b6e744ff73d"
+        }
+      }
+    }
+  },
+  "pour_bottle_only_if": null,
+  "keg_only": false,
+  "keg_only_reason": null,
+  "options": [],
+  "build_dependencies": [],
+  "dependencies": [],
+  "test_dependencies": [],
+  "recommended_dependencies": [],
+  "optional_dependencies": [],
+  "no_linkage_dependencies": [],
+  "uses_from_macos": [],
+  "uses_from_macos_bounds": [],
+  "requirements": [
+    {
+      "name": "xcode",
+      "cask": null,
+      "download": null,
+      "version": "26.0",
+      "contexts": [
+        "build"
+      ],
+      "specs": [
+        "stable",
+        "head"
+      ]
+    },
+    {
+      "name": "macos",
+      "cask": null,
+      "download": null,
+      "version": "15",
+      "contexts": [],
+      "specs": [
+        "stable",
+        "head"
+      ]
+    }
+  ],
+  "conflicts_with": [],
+  "conflicts_with_reasons": [],
+  "link_overwrite": [],
+  "caveats": null,
+  "installed": [],
+  "linked_keg": null,
+  "pinned": false,
+  "outdated": false,
+  "deprecated": false,
+  "deprecation_date": null,
+  "deprecation_reason": null,
+  "deprecation_replacement_formula": null,
+  "deprecation_replacement_cask": null,
+  "deprecate_args": null,
+  "disabled": false,
+  "disable_date": null,
+  "disable_reason": null,
+  "disable_replacement_formula": null,
+  "disable_replacement_cask": null,
+  "disable_args": null,
+  "post_install_steps": [],
+  "post_install_defined": false,
+  "service": null,
+  "tap_git_head": "04ba25cbce27058b191834d6f7184047b625b0ca",
+  "ruby_source_path": "Formula/apple-platform-tools.rb",
+  "ruby_source_checksum": {
+    "sha256": "e2b80a759f2e07202b0b9f2d921b211d4f7127b1c5e732fcfd1ec114c673cfda"
+  },
+  "variations": {}
+}
