@@ -50,6 +50,19 @@ jobs:
           sudo xcode-select -s /Library/Developer/CommandLineTools
           swift --version
 
+      - name: Probe toolchains on macos-26
+        if: matrix.os == 'macos-26'
+        run: |
+          sw_vers
+          ls -d /Applications/Xcode* || true
+          ls -d /Library/Developer/CommandLineTools/SDKs/* || true
+          pkgutil --pkg-info com.apple.pkg.CLTools_Executables || true
+          /Library/Developer/CommandLineTools/usr/bin/swiftc --version || true
+          which xcodes aria2c || true
+          touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+          softwareupdate --list 2>&1 | head -80 || true
+          rm -f /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+
       - run: brew test-bot --only-cleanup-before
 
       - run: brew test-bot --only-setup
