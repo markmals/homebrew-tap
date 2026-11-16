@@ -30,21 +30,35 @@ class Recon < Formula
     system "cargo", "install", *std_cargo_args(root: libexec, path: "crates/recon")
     system "codesign", "--force", "--sign", "-", "--identifier", "me.malstrom.recon",
            libexec/"bin/recon"
-    # SwiftPM cannot start its own sandbox inside Homebrew's.
-    system "node", "tools/build-helper.ts", "--disable-sandbox"
-    system "node", "tools/build-loader.ts"
-
-    # Probe only: run the Swift suites on this OS; a failure is reported, not fatal.
+    # Probes only: each one reports its outcome and never stops the install.
+    ohai "PROBE environment", Utils.popen_read("sw_vers", err: :out),
+         Utils.popen_read("xcrun", "swiftc", "--version", err: :out)
+    probe_command libexec/"bin/recon", "context", full: true
+    probe_command libexec/"bin/recon", "app", "list", full: true
+    probe_command libexec/"bin/recon", "ui", "windows", "com.apple.finder", full: true
+    probe_command "xcrun", "swift", "build", "--package-path", "helper", "-c", "release",
+                  "--arch", "arm64", "--disable-sandbox"
+    probe_command "xcrun", "swift", "build", "--package-path", "helper", "-c", "release",
+                  "--arch", "arm64e", "--disable-sandbox"
     %w[sdks/swift extensions/appkit extensions/catalyst helper].each do |package|
-      system "xcrun", "swift", "test", "--disable-sandbox", "--package-path", package
-    rescue ErrorDuringExecution => e
-      opoo "PROBE swift test #{package} failed: #{e.message}"
+      probe_command "xcrun", "swift", "test", "--disable-sandbox", "--package-path", package
     end
+    probe_command "cargo", "test", "--workspace", "--release"
+    odie "PROBE finished; nothing is installed"
+  end
 
-    (libexec/"bin").install "target/recon-loader",
-                            "target/recon-helper.dylib",
-                            "target/recon-helper.build-id"
-    bin.write_exec_script libexec/"bin/recon"
+  def probe_command(*args, full: false)
+    command = args.map(&:to_s)
+    output = Utils.popen_read(*command, err: :out)
+    ohai "PROBE #{command.join(" ")} (exit #{$CHILD_STATUS.exitstatus})"
+    lines = output.lines
+    if full
+      puts lines.first(80).join
+    else
+      summary = /error:|Test run|Suite .* (passed|failed)|Executed|test result|✘|Build (complete|failed)|Unable to resolve/
+      puts lines.grep(summary).first(60).join
+      puts lines.last(10).join
+    end
   end
 
   def caveats
