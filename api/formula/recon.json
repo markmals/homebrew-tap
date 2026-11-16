@@ -9,15 +9,15 @@
   "license": "MIT",
   "homepage": "https://github.com/markmals/recon",
   "versions": {
-    "stable": "0.2.0",
+    "stable": "0.3.0",
     "head": "HEAD",
     "bottle": true
   },
   "urls": {
     "stable": {
       "url": "https://github.com/markmals/recon.git",
-      "tag": "v0.2.0",
-      "revision": "34d63ac7adf418731736dc18a1617bf9fe76c2e6",
+      "tag": "v0.3.0",
+      "revision": "5b8a0f08702582d5960a3271c662a955121d7727",
       "using": null,
       "checksum": null
     },
@@ -38,12 +38,17 @@
   "bottle": {
     "stable": {
       "rebuild": 0,
-      "root_url": "https://github.com/markmals/homebrew-tap/releases/download/recon-0.2.0",
+      "root_url": "https://github.com/markmals/homebrew-tap/releases/download/recon-0.3.0",
       "files": {
         "arm64_golden_gate": {
           "cellar": ":any",
-          "url": "https://github.com/markmals/homebrew-tap/releases/download/recon-0.2.0/recon-0.2.0.arm64_golden_gate.bottle.tar.gz",
-          "sha256": "df2d2cff111f8a14e4e559d6b426853fe742e70da0c6f3ce17b885953c3f28c6"
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/recon-0.3.0/recon-0.3.0.arm64_golden_gate.bottle.tar.gz",
+          "sha256": "48ebe3bb13a85f065010709e144740557590ae68787b1573be6b0b08f661f680"
+        },
+        "arm64_tahoe": {
+          "cellar": ":any",
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/recon-0.3.0/recon-0.3.0.arm64_tahoe.bottle.tar.gz",
+          "sha256": "99db24d98ce4bcddca44b3d617bce095d78233b33ab330e2a4ab9dc974f6cff5"
         }
       }
     }
@@ -79,7 +84,7 @@
       "name": "macos",
       "cask": null,
       "download": null,
-      "version": "27",
+      "version": "26",
       "contexts": [],
       "specs": [
         "stable",
@@ -110,10 +115,10 @@
   "post_install_steps": [],
   "post_install_defined": false,
   "service": null,
-  "tap_git_head": "b18eaf19a0ec899772e7a97f3be14280cb800e80",
+  "tap_git_head": "b1d4f20fa424a59190a607fd6872b2611d413c90",
   "ruby_source_path": "Formula/recon.rb",
   "ruby_source_checksum": {
-    "sha256": "0fde3184adfa9a6def73e8c3743e11270e2e72a56d7b694d1866b344c60e26f6"
+    "sha256": "3c863671fd690df91c69defe19809831a1414db87c1b4ed31567ab6e4216d6fc"
   },
   "variations": {}
 }
