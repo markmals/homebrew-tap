@@ -31,8 +31,8 @@ class Recon < Formula
     system "codesign", "--force", "--sign", "-", "--identifier", "me.malstrom.recon",
            libexec/"bin/recon"
     # Probes only: each one reports its outcome and never stops the install.
-    ohai "PROBE environment", Utils.popen_read("sw_vers", err: :out),
-         Utils.popen_read("xcrun", "swiftc", "--version", err: :out)
+    ohai "PROBE environment", Open3.capture2e("sw_vers").first,
+         Open3.capture2e("xcrun", "swiftc", "--version").first
     probe_command libexec/"bin/recon", "context", full: true
     probe_command libexec/"bin/recon", "app", "list", full: true
     probe_command libexec/"bin/recon", "ui", "windows", "com.apple.finder", full: true
@@ -49,13 +49,13 @@ class Recon < Formula
 
   def probe_command(*args, full: false)
     command = args.map(&:to_s)
-    output = Utils.popen_read(*command, err: :out)
-    ohai "PROBE #{command.join(" ")} (exit #{$CHILD_STATUS.exitstatus})"
+    output, status = Open3.capture2e(*command)
+    ohai "PROBE #{command.join(" ")} (exit #{status.exitstatus})"
     lines = output.lines
     if full
       puts lines.first(80).join
     else
-      summary = /error:|Test run|Suite .* (passed|failed)|Executed|test result|✘|Build (complete|failed)|Unable to resolve/
+      summary = /error:|Test run|Executed|test result|✘|Build (complete|failed)|Unable to resolve/
       puts lines.grep(summary).first(60).join
       puts lines.last(10).join
     end
