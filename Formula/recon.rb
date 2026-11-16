@@ -33,32 +33,37 @@ class Recon < Formula
     # Probes only: each one reports its outcome and never stops the install.
     ohai "PROBE environment", Open3.capture2e("sw_vers").first,
          Open3.capture2e("xcrun", "swiftc", "--version").first
-    probe_command libexec/"bin/recon", "context", full: true
-    probe_command libexec/"bin/recon", "app", "list", full: true
-    probe_command libexec/"bin/recon", "ui", "windows", "com.apple.finder", full: true
+    probe_command libexec/"bin/recon", "context", full: true, seconds: 60
+    probe_command libexec/"bin/recon", "app", "list", full: true, seconds: 60
     probe_command "xcrun", "swift", "build", "--package-path", "helper", "-c", "release",
                   "--arch", "arm64", "--disable-sandbox"
     probe_command "xcrun", "swift", "build", "--package-path", "helper", "-c", "release",
                   "--arch", "arm64e", "--disable-sandbox"
-    %w[sdks/swift extensions/appkit extensions/catalyst helper].each do |package|
+    probe_command "cargo", "test", "--workspace", "--release"
+    %w[extensions/appkit sdks/swift extensions/catalyst helper].each do |package|
       probe_command "xcrun", "swift", "test", "--disable-sandbox", "--package-path", package
     end
-    probe_command "cargo", "test", "--workspace", "--release"
+    probe_command libexec/"bin/recon", "ui", "windows", "com.apple.finder", full: true, seconds: 60
     odie "PROBE finished; nothing is installed"
   end
 
-  def probe_command(*args, full: false)
+  def probe_command(*args, full: false, seconds: 420)
     command = args.map(&:to_s)
-    output, status = Open3.capture2e(*command)
-    ohai "PROBE #{command.join(" ")} (exit #{status.exitstatus})"
-    lines = output.lines
-    if full
-      puts lines.first(80).join
-    else
-      summary = /error:|Test run|Executed|test result|✘|Build (complete|failed)|Unable to resolve/
-      puts lines.grep(summary).first(60).join
-      puts lines.last(10).join
+    ohai "PROBE #{command.join(" ")}"
+    lines = []
+    Open3.popen2e(*command, pgroup: true) do |stdin, output, waiter|
+      stdin.close
+      reader = Thread.new { output.each_line { |line| lines << line } }
+      unless waiter.join(seconds)
+        opoo "PROBE timed out after #{seconds}s"
+        Process.kill("TERM", -waiter.pid)
+        Process.kill("KILL", -waiter.pid) unless waiter.join(10)
+      end
+      reader.join(10)
+      ohai "PROBE exit #{waiter.value.exitstatus.inspect}"
     end
+    summary = /error:|Test run|Executed|test result|✘|Build (complete|failed)|Unable to resolve/
+    puts(full ? lines.first(80).join : lines.grep(summary).first(60).join + lines.last(10).join)
   end
 
   def caveats
