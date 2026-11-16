@@ -9,15 +9,15 @@
   "license": "MIT",
   "homepage": "https://github.com/markmals/recon",
   "versions": {
-    "stable": "0.1.5",
+    "stable": "0.2.0",
     "head": "HEAD",
     "bottle": true
   },
   "urls": {
     "stable": {
       "url": "https://github.com/markmals/recon.git",
-      "tag": "v0.1.5",
-      "revision": "193e9adddf1ef340dce20b89c64cf7cd12fe0b07",
+      "tag": "v0.2.0",
+      "revision": "34d63ac7adf418731736dc18a1617bf9fe76c2e6",
       "using": null,
       "checksum": null
     },
@@ -38,12 +38,12 @@
   "bottle": {
     "stable": {
       "rebuild": 0,
-      "root_url": "https://github.com/markmals/homebrew-tap/releases/download/recon-0.1.5",
+      "root_url": "https://github.com/markmals/homebrew-tap/releases/download/recon-0.2.0",
       "files": {
         "arm64_golden_gate": {
           "cellar": ":any",
-          "url": "https://github.com/markmals/homebrew-tap/releases/download/recon-0.1.5/recon-0.1.5.arm64_golden_gate.bottle.tar.gz",
-          "sha256": "0a210ff18a19d2c739ce3d1724e0c80c946a0497c9962ea9ac98499a0adebb8d"
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/recon-0.2.0/recon-0.2.0.arm64_golden_gate.bottle.tar.gz",
+          "sha256": "df2d2cff111f8a14e4e559d6b426853fe742e70da0c6f3ce17b885953c3f28c6"
         }
       }
     }
@@ -110,10 +110,10 @@
   "post_install_steps": [],
   "post_install_defined": false,
   "service": null,
-  "tap_git_head": "04ba25cbce27058b191834d6f7184047b625b0ca",
+  "tap_git_head": "b18eaf19a0ec899772e7a97f3be14280cb800e80",
   "ruby_source_path": "Formula/recon.rb",
   "ruby_source_checksum": {
-    "sha256": "6fbf507411c2bac269f8ccfb206c3e4ec73d3546cd6102fc7f13514314381b59"
+    "sha256": "0fde3184adfa9a6def73e8c3743e11270e2e72a56d7b694d1866b344c60e26f6"
   },
   "variations": {}
 }
