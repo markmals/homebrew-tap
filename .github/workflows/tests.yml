@@ -67,6 +67,29 @@ jobs:
           echo "Bottle files in current directory:"
           find . -name "*.bottle.*" -type f 2>/dev/null || true
 
+      # Recon builds only with Apple's Swift build swiftlang-6.4.2.1.9. No macOS 26 image ships it
+      # and macos-26 cannot install it, so test-bot skips recon's failed build there. Xcode 27.2
+      # runs on macOS 26.6 and later, so build recon's macOS 26 bottle here instead:
+      # HOMEBREW_FAKE_MACOS makes Homebrew tag the bottle arm64_tahoe and build it against the
+      # macOS 26 SDK. The verify-recon-macos-26 job installs that bottle on a macOS 26 image.
+      # This is not another test-bot run: test-bot deletes the first run's bottles as unexpected.
+      - name: Build the macOS 26 bottle of recon
+        if: matrix.os == 'xcode-27' && github.event_name == 'pull_request'
+        env:
+          HOMEBREW_FAKE_MACOS: "26.6"
+        run: |
+          if ! compgen -G './recon--*.bottle.json' > /dev/null; then
+            echo "The step above built no recon bottle, so there is no macOS 26 bottle to build."
+            exit 0
+          fi
+          version="$(brew ruby -e 'puts Formula["markmals/tap/recon"].pkg_version')"
+          brew install --build-bottle --verbose markmals/tap/recon
+          brew test markmals/tap/recon
+          brew bottle --verbose --json \
+            --root-url="https://github.com/${GITHUB_REPOSITORY}/releases/download/recon-${version}" \
+            markmals/tap/recon
+          brew uninstall --formula --force --ignore-dependencies markmals/tap/recon
+
       - name: Upload bottles as artifact
         if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v7
@@ -74,3 +97,41 @@ jobs:
           name: bottles_${{ matrix.os }}
           path: "**/*.bottle.*"
           if-no-files-found: warn
+
+  verify-recon-macos-26:
+    needs: test-bot
+    if: github.event_name == 'pull_request'
+    runs-on: macos-26
+    steps:
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@main
+
+      # Absent when no job built a bottle.
+      - name: Download the bottles built on xcode-27
+        uses: actions/download-artifact@v8
+        with:
+          name: bottles_xcode-27
+        continue-on-error: true
+
+      - name: Install and test the macOS 26 bottle of recon
+        run: |
+          if ! compgen -G './recon--*.arm64_tahoe.bottle*.tar.gz' > /dev/null; then
+            echo "No macOS 26 bottle of recon was built, so there is nothing to verify."
+            exit 0
+          fi
+          brew install ./recon--*.arm64_tahoe.bottle*.tar.gz
+          brew test recon
+          # The bottle was built on macOS 27, so check that nothing in it needs more than this image.
+          host="$(sw_vers -productVersion)"
+          bin="$(brew --prefix recon)/libexec/bin"
+          for binary in recon recon-loader recon-helper.dylib; do
+            for arch in $(lipo -archs "$bin/$binary"); do
+              minos="$(otool -arch "$arch" -l "$bin/$binary" | awk '/LC_BUILD_VERSION/ { seen = 1 } seen && $1 == "minos" { print $2; exit }')"
+              echo "$binary ($arch) needs macOS $minos or later"
+              newest="$(printf '%s\n%s\n' "$minos" "$host" | sort -V | tail -1)"
+              if [ "$newest" != "$host" ]; then
+                echo "::error::$binary ($arch) needs macOS $minos, but this image runs macOS $host."
+                exit 1
+              fi
+            done
+          done
