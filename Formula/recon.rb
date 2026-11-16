@@ -2,20 +2,15 @@ class Recon < Formula
   desc "Inspect applications without activating them"
   homepage "https://github.com/markmals/recon"
   url "https://github.com/markmals/recon.git",
-      tag:      "v0.1.5",
-      revision: "193e9adddf1ef340dce20b89c64cf7cd12fe0b07"
+      tag:      "v0.2.0",
+      revision: "34d63ac7adf418731736dc18a1617bf9fe76c2e6"
   license "MIT"
   head "https://github.com/markmals/recon.git", branch: "main"
-
-  bottle do
-    root_url "https://github.com/markmals/homebrew-tap/releases/download/recon-0.1.5"
-    sha256 cellar: :any, arm64_golden_gate: "0a210ff18a19d2c739ce3d1724e0c80c946a0497c9962ea9ac98499a0adebb8d"
-  end
 
   depends_on "node" => :build
   depends_on "rust" => :build
   depends_on arch: :arm64
-  # Recon builds only with Apple's Swift build swiftlang-6.4.0.34.1, from Xcode 27.1 or the
+  # Recon builds only with Apple's Swift build swiftlang-6.4.2.1.9, from Xcode 27.2 or the
   # macOS 27 Command Line Tools, and its build fails naming any other compiler it finds.
   depends_on macos: :golden_gate
 
