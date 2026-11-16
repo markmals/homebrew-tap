@@ -80,6 +80,25 @@ jobs:
           echo "Bottle files in current directory:"
           find . -name "*.bottle.*" -type f 2>/dev/null || true
 
+      - name: Probe a Tahoe-tagged build on xcode-27
+        if: matrix.os == 'xcode-27' && github.event_name == 'pull_request'
+        env:
+          HOMEBREW_FAKE_MACOS: "26.6"
+        run: |
+          brew config | grep -E "macOS|CLT|Xcode|SDK" || true
+          brew uninstall --force --ignore-dependencies markmals/tap/recon || true
+          brew install --build-bottle --verbose markmals/tap/recon 2>&1 | tail -60
+          B="$(brew --prefix markmals/tap/recon)/libexec/bin"
+          for f in recon recon-loader recon-helper.dylib; do
+            for a in $(lipo -archs "$B/$f"); do
+              printf '%s [%s] ' "$f" "$a"
+              otool -arch "$a" -l "$B/$f" | grep -A5 LC_BUILD_VERSION | grep -E 'minos|sdk' | tr -s ' ' | tr '\n' ' '
+              echo
+            done
+          done
+          brew bottle --json --verbose markmals/tap/recon 2>&1 | tail -20
+          ls -la ./*.bottle.* || true
+
       - name: Upload bottles as artifact
         if: always() && github.event_name == 'pull_request'
         uses: actions/upload-artifact@v7
