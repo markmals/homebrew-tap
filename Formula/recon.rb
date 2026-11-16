@@ -7,25 +7,39 @@ class Recon < Formula
   license "MIT"
   head "https://github.com/markmals/recon.git", branch: "main"
 
-  bottle do
-    root_url "https://github.com/markmals/homebrew-tap/releases/download/recon-0.2.0"
-    sha256 cellar: :any, arm64_golden_gate: "df2d2cff111f8a14e4e559d6b426853fe742e70da0c6f3ce17b885953c3f28c6"
-  end
-
   depends_on "node" => :build
   depends_on "rust" => :build
   depends_on arch: :arm64
-  # Recon builds only with Apple's Swift build swiftlang-6.4.2.1.9, from Xcode 27.2 or the
-  # macOS 27 Command Line Tools, and its build fails naming any other compiler it finds.
-  depends_on macos: :golden_gate
+  # DRY RUN, do not merge: probes whether Recon's macOS 27 tree builds and runs on macOS 26.
+  depends_on macos: :tahoe
 
   def install
+    # Retarget the macOS 27 tree at macOS 26 and at the Apple Swift this runner ships.
+    swift_build = Utils.safe_popen_read("/usr/bin/xcrun", "swiftc", "--version")[/swiftlang-[\d.]+/]
+    odie "no Apple Swift build found" if swift_build.nil?
+    inreplace "swift-toolchain.toml", /^build = ".*"$/, "build = \"#{swift_build}\""
+    inreplace %w[helper/Package.swift sdks/swift/Package.swift extensions/appkit/Package.swift
+                 extensions/catalyst/Package.swift],
+              'platforms: [.macOS("27.0")]', 'platforms: [.macOS("26.0")]'
+    inreplace "tools/build-loader.ts", '"-Werror",',
+              "\"-Werror\",\n            \"-mmacosx-version-min=26.0\","
+    inreplace "crates/recon-native-access-macos/src/access.rs",
+              "version.split('.').next() == Some(\"27\")",
+              "matches!(version.split('.').next(), Some(\"26\" | \"27\"))"
+
     system "cargo", "install", *std_cargo_args(root: libexec, path: "crates/recon")
     system "codesign", "--force", "--sign", "-", "--identifier", "me.malstrom.recon",
            libexec/"bin/recon"
     # SwiftPM cannot start its own sandbox inside Homebrew's.
     system "node", "tools/build-helper.ts", "--disable-sandbox"
     system "node", "tools/build-loader.ts"
+
+    # Probe only: run the Swift suites on this OS; a failure is reported, not fatal.
+    %w[sdks/swift extensions/appkit extensions/catalyst helper].each do |package|
+      system "xcrun", "swift", "test", "--disable-sandbox", "--package-path", package
+    rescue ErrorDuringExecution => e
+      opoo "PROBE swift test #{package} failed: #{e.message}"
+    end
 
     (libexec/"bin").install "target/recon-loader",
                             "target/recon-helper.dylib",
@@ -53,5 +67,10 @@ class Recon < Formula
     assert_match(/\A[0-9a-f]{64}\n\z/, (libexec/"bin/recon-helper.build-id").read)
     assert_match "Identifier=me.malstrom.recon",
                  shell_output("codesign -dv #{libexec/"bin/recon"} 2>&1")
+
+    # Probe only: what the CLI says on this OS.
+    ohai "sw_vers", shell_output("sw_vers")
+    ohai "recon context", shell_output("#{bin}/recon context 2>&1")
+    ohai "recon app list", shell_output("#{bin}/recon app list 2>&1")
   end
 end
