@@ -16,8 +16,10 @@ class Recon < Formula
   depends_on "rust" => :build
   depends_on arch: :arm64
   # Recon builds only with Apple's Swift build swiftlang-6.4.2.1.9, from Xcode 27.2 or the
-  # macOS 27 Command Line Tools, and its build fails naming any other compiler it finds.
-  depends_on macos: :golden_gate
+  # Command Line Tools that ship with it, and its build fails naming any other compiler it
+  # finds. That compiler runs on macOS 26.6 and later, but no macOS 26 CI image has it, so
+  # tests.yml builds the macOS 26 bottle on xcode-27.
+  depends_on macos: :tahoe
 
   def install
     system "cargo", "install", *std_cargo_args(root: libexec, path: "crates/recon")
