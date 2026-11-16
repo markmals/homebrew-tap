@@ -2,9 +2,8 @@ class Recon < Formula
   desc "Inspect applications without activating them"
   homepage "https://github.com/markmals/recon"
   url "https://github.com/markmals/recon.git",
-      branch:   "macos-26-support",
-      revision: "9ae1478cc215771c793ff4c477595a4c227e2880"
-  version "0.2.0"
+      tag:      "v0.3.0",
+      revision: "5b8a0f08702582d5960a3271c662a955121d7727"
   license "MIT"
   head "https://github.com/markmals/recon.git", branch: "main"
 
