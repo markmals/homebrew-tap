@@ -83,6 +83,8 @@ jobs:
             exit 0
           fi
           version="$(brew ruby -e 'puts Formula["markmals/tap/recon"].pkg_version')"
+          # test-bot leaves the bottle it just tested installed, and install would not rebuild it.
+          brew uninstall --formula --force --ignore-dependencies markmals/tap/recon
           brew install --build-bottle --verbose markmals/tap/recon
           brew test markmals/tap/recon
           brew bottle --verbose --json \
@@ -121,17 +123,20 @@ jobs:
           fi
           brew install ./recon--*.arm64_tahoe.bottle*.tar.gz
           brew test recon
-          # The bottle was built on macOS 27, so check that nothing in it needs more than this image.
+          # The bottle was built on macOS 27, so check that nothing in it needs, or was linked
+          # against, a newer macOS than this image runs.
           host="$(sw_vers -productVersion)"
           bin="$(brew --prefix recon)/libexec/bin"
           for binary in recon recon-loader recon-helper.dylib; do
             for arch in $(lipo -archs "$bin/$binary"); do
-              minos="$(otool -arch "$arch" -l "$bin/$binary" | awk '/LC_BUILD_VERSION/ { seen = 1 } seen && $1 == "minos" { print $2; exit }')"
-              echo "$binary ($arch) needs macOS $minos or later"
-              newest="$(printf '%s\n%s\n' "$minos" "$host" | sort -V | tail -1)"
-              if [ "$newest" != "$host" ]; then
-                echo "::error::$binary ($arch) needs macOS $minos, but this image runs macOS $host."
-                exit 1
-              fi
+              for field in minos sdk; do
+                version="$(otool -arch "$arch" -l "$bin/$binary" | awk -v field="$field" '/LC_BUILD_VERSION/ { seen = 1 } seen && $1 == field { print $2; exit }')"
+                echo "$binary ($arch) $field $version"
+                newest="$(printf '%s\n%s\n' "$version" "$host" | sort -V | tail -1)"
+                if [ "$newest" != "$host" ]; then
+                  echo "::error::$binary ($arch) has $field $version, newer than this image's macOS $host."
+                  exit 1
+                fi
+              done
             done
           done
