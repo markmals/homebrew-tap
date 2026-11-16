@@ -7,6 +7,12 @@ class Recon < Formula
   license "MIT"
   head "https://github.com/markmals/recon.git", branch: "main"
 
+  bottle do
+    root_url "https://github.com/markmals/homebrew-tap/releases/download/recon-0.3.0"
+    sha256 cellar: :any, arm64_golden_gate: "48ebe3bb13a85f065010709e144740557590ae68787b1573be6b0b08f661f680"
+    sha256 cellar: :any, arm64_tahoe:       "99db24d98ce4bcddca44b3d617bce095d78233b33ab330e2a4ab9dc974f6cff5"
+  end
+
   depends_on "node" => :build
   depends_on "rust" => :build
   depends_on arch: :arm64
