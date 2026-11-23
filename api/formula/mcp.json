@@ -1,0 +1,110 @@
+{
+  "name": "mcp",
+  "full_name": "markmals/tap/mcp",
+  "tap": "markmals/tap",
+  "oldnames": [],
+  "aliases": [],
+  "versioned_formulae": [],
+  "desc": "Agent-first CLI for Model Context Protocol servers",
+  "license": null,
+  "homepage": "https://github.com/markmals/mcp",
+  "versions": {
+    "stable": "0.0.1",
+    "head": "HEAD",
+    "bottle": true
+  },
+  "urls": {
+    "stable": {
+      "url": "https://github.com/markmals/mcp.git",
+      "tag": "v0.0.1",
+      "revision": "287b90d35eaede88d588c67ff36c71f10b2e584e",
+      "using": null,
+      "checksum": null
+    },
+    "head": {
+      "url": "https://github.com/markmals/mcp.git",
+      "branch": "main",
+      "using": null
+    }
+  },
+  "patches": [],
+  "local_patch_checksums": {},
+  "revision": 0,
+  "version_scheme": 0,
+  "compatibility_version": null,
+  "autobump": true,
+  "no_autobump_message": null,
+  "skip_livecheck": false,
+  "bottle": {
+    "stable": {
+      "rebuild": 0,
+      "root_url": "https://github.com/markmals/homebrew-tap/releases/download/mcp-0.0.1",
+      "files": {
+        "arm64_golden_gate": {
+          "cellar": ":any_skip_relocation",
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/mcp-0.0.1/mcp-0.0.1.arm64_golden_gate.bottle.tar.gz",
+          "sha256": "a6e522e7e11d22378cc1e808b84665ad5551781a820e47d426c0b790ae177c64"
+        },
+        "arm64_tahoe": {
+          "cellar": ":any_skip_relocation",
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/mcp-0.0.1/mcp-0.0.1.arm64_tahoe.bottle.tar.gz",
+          "sha256": "eddce4a612ebf0a75339255581db072500bd387d61ca329c3fce697d44624b27"
+        },
+        "arm64_sequoia": {
+          "cellar": ":any_skip_relocation",
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/mcp-0.0.1/mcp-0.0.1.arm64_sequoia.bottle.tar.gz",
+          "sha256": "b799bdd93a0afbc3ac23a834d33b3ed6a591d3e3b037f2b52d04880338c0aab1"
+        },
+        "x86_64_linux": {
+          "cellar": ":any",
+          "url": "https://github.com/markmals/homebrew-tap/releases/download/mcp-0.0.1/mcp-0.0.1.x86_64_linux.bottle.tar.gz",
+          "sha256": "2aa32a53c200f117b062ad1c991bbab0191ebb0a55ab42d573d29cda885acec2"
+        }
+      }
+    }
+  },
+  "pour_bottle_only_if": null,
+  "keg_only": false,
+  "keg_only_reason": null,
+  "options": [],
+  "build_dependencies": [
+    "rust"
+  ],
+  "dependencies": [],
+  "test_dependencies": [],
+  "recommended_dependencies": [],
+  "optional_dependencies": [],
+  "no_linkage_dependencies": [],
+  "uses_from_macos": [],
+  "uses_from_macos_bounds": [],
+  "requirements": [],
+  "conflicts_with": [],
+  "conflicts_with_reasons": [],
+  "link_overwrite": [],
+  "caveats": "mcp reads MCP servers from a project's .mcp.json and from\n$XDG_CONFIG_HOME/.mcp.json (~/.config/.mcp.json). Start with:\n  mcp --help\n\nThe MCP Python SDK and f/mcptools also install an `mcp`; the first one\non PATH wins, and Homebrew links only one formula's `mcp` at a time.\n",
+  "installed": [],
+  "linked_keg": null,
+  "pinned": false,
+  "outdated": false,
+  "deprecated": false,
+  "deprecation_date": null,
+  "deprecation_reason": null,
+  "deprecation_replacement_formula": null,
+  "deprecation_replacement_cask": null,
+  "deprecate_args": null,
+  "disabled": false,
+  "disable_date": null,
+  "disable_reason": null,
+  "disable_replacement_formula": null,
+  "disable_replacement_cask": null,
+  "disable_args": null,
+  "post_install_steps": [],
+  "post_install_defined": false,
+  "service": null,
+  "tap_git_head": "9ef78df3574adfac6cab2440a6bcfeb22828f0f0",
+  "ruby_source_path": "Formula/mcp.rb",
+  "ruby_source_checksum": {
+    "sha256": "857a1c14db3fdde8e220b0ba6fe60edf1fe1f8ad7da0fa7c8c414919206cbeef"
+  },
+  "variations": {}
+}
