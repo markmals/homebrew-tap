@@ -115,10 +115,10 @@
   "post_install_steps": [],
   "post_install_defined": false,
   "service": null,
-  "tap_git_head": "b1d4f20fa424a59190a607fd6872b2611d413c90",
+  "tap_git_head": "894119738608235c9b62268b37a489b7b4f5d390",
   "ruby_source_path": "Formula/recon.rb",
   "ruby_source_checksum": {
-    "sha256": "3c863671fd690df91c69defe19809831a1414db87c1b4ed31567ab6e4216d6fc"
+    "sha256": "183ff0d2a5446eac6c21d85661fc6cad40cc8434c4093ffa65ac9a759f407984"
   },
   "variations": {}
 }
