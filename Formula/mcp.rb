@@ -6,6 +6,14 @@ class Mcp < Formula
       revision: "287b90d35eaede88d588c67ff36c71f10b2e584e"
   head "https://github.com/markmals/mcp.git", branch: "main"
 
+  bottle do
+    root_url "https://github.com/markmals/homebrew-tap/releases/download/mcp-0.0.1"
+    sha256 cellar: :any_skip_relocation, arm64_golden_gate: "a6e522e7e11d22378cc1e808b84665ad5551781a820e47d426c0b790ae177c64"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:       "eddce4a612ebf0a75339255581db072500bd387d61ca329c3fce697d44624b27"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:     "b799bdd93a0afbc3ac23a834d33b3ed6a591d3e3b037f2b52d04880338c0aab1"
+    sha256 cellar: :any,                 x86_64_linux:      "2aa32a53c200f117b062ad1c991bbab0191ebb0a55ab42d573d29cda885acec2"
+  end
+
   depends_on "rust" => :build
 
   def install
