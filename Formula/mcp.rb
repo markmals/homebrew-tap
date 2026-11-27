@@ -4,6 +4,7 @@ class Mcp < Formula
   url "https://github.com/markmals/mcp.git",
       tag:      "v0.0.1",
       revision: "287b90d35eaede88d588c67ff36c71f10b2e584e"
+  license "MIT"
   head "https://github.com/markmals/mcp.git", branch: "main"
 
   bottle do
