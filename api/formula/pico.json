@@ -119,7 +119,7 @@
   "post_install_steps": [],
   "post_install_defined": false,
   "service": null,
-  "tap_git_head": "9ef78df3574adfac6cab2440a6bcfeb22828f0f0",
+  "tap_git_head": "31f0ff999b3c3085c7ca49882915284385025ff1",
   "ruby_source_path": "Formula/pico.rb",
   "ruby_source_checksum": {
     "sha256": "dcc7b55a97bf5bd5ee5e9b5d03b277aa9aaab8684195a63f7ccb34278c368317"

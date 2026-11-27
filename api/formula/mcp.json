@@ -6,7 +6,7 @@
   "aliases": [],
   "versioned_formulae": [],
   "desc": "Agent-first CLI for Model Context Protocol servers",
-  "license": null,
+  "license": "MIT",
   "homepage": "https://github.com/markmals/mcp",
   "versions": {
     "stable": "0.0.1",
@@ -101,10 +101,10 @@
   "post_install_steps": [],
   "post_install_defined": false,
   "service": null,
-  "tap_git_head": "9ef78df3574adfac6cab2440a6bcfeb22828f0f0",
+  "tap_git_head": "31f0ff999b3c3085c7ca49882915284385025ff1",
   "ruby_source_path": "Formula/mcp.rb",
   "ruby_source_checksum": {
-    "sha256": "857a1c14db3fdde8e220b0ba6fe60edf1fe1f8ad7da0fa7c8c414919206cbeef"
+    "sha256": "e389f1687ccb3cf9ec850d90c6a86806beab96cea5d825b4f89fe7be4feda9bb"
   },
   "variations": {}
 }
